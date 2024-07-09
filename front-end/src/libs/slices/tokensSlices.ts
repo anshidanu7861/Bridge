@@ -1,12 +1,44 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {};
+interface Token {
+  address: string;
+  symbol: string;
+  name: string;
+  chainId: number;
+  decimals: number;
+  logoURI: string;
+}
+
+interface TokenState {
+  selectedToken: Token[];
+}
+
+const initialState: TokenState = {
+  selectedToken: [],
+};
 
 export const tokenSlice = createSlice({
   name: "tokens",
   initialState,
-  reducers: {},
+  reducers: {
+    userSelectTokens: (state, { payload }: PayloadAction<Token>) => {
+      if (state.selectedToken.length) {
+        const tokenExists = state.selectedToken.some(
+          (token) => token.address === payload.address
+        );
+        if (!tokenExists) {
+          state.selectedToken.push(payload);
+        } else {
+          state.selectedToken = state.selectedToken.filter(
+            (token) => token.address !== payload.address
+          );
+        }
+      } else {
+        state.selectedToken.push(payload);
+      }
+    },
+  },
 });
 
-export const {} = tokenSlice.actions;
+export const { userSelectTokens } = tokenSlice.actions;
 export default tokenSlice.reducer;
