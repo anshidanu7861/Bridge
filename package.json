@@ -1,0 +1,17 @@
+{
+  "name": "bridge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend": "cd backend && npm run dev",
+    "front-end": "cd front-end && npm run dev",
+    "dev": "concurrently \"npm run backend \" \"npm run front-end\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
